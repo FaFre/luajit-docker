@@ -10,7 +10,7 @@ RUN apt-get update \
     g++ \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/LuaJIT/LuaJIT.git
+RUN git clone -b v2.1 https://github.com/LuaJIT/LuaJIT.git
 
 WORKDIR /LuaJIT
 RUN make && make install
