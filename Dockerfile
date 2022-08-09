@@ -14,3 +14,8 @@ RUN git clone -b v2.1 https://github.com/LuaJIT/LuaJIT.git
 
 WORKDIR /LuaJIT
 RUN make && make install
+
+FROM scratch
+
+COPY --from=lua_builder /usr/local/lib/libluajit* /usr/local/lib/
+COPY --from=lua_builder /usr/local/include/luajit-2.1/ /usr/local/include/luajit-2.1/
