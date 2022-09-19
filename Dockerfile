@@ -17,11 +17,13 @@ WORKDIR /luarocks
 RUN ln -s /usr/local/bin/luajit-* /usr/local/bin/luajit
 RUN wget https://luarocks.org/releases/luarocks-3.8.0.tar.gz && tar zxpf luarocks-3.8.0.tar.gz
 WORKDIR /luarocks/luarocks-3.8.0
-RUN ./configure --prefix="/luarocks/build" && make && make install
+RUN ./configure && make && make install
 
 FROM scratch
 
 COPY --from=lua_builder /usr/local/bin/luajit-* /usr/local/bin/luajit
 COPY --from=lua_builder /usr/local/lib/libluajit* /usr/local/lib/
 COPY --from=lua_builder /usr/local/include/luajit-2.1/ /usr/local/include/luajit-2.1/
-COPY --from=lua_builder /luarocks/build/ /usr/local/
+COPY --from=lua_builder /usr/local/bin/luarocks* /usr/local/bin/
+COPY --from=lua_builder /usr/local/etc/luarocks/ /usr/local/etc/luarocks/
+COPY --from=lua_builder /usr/local/share/lua/ /usr/local/share/lua/
